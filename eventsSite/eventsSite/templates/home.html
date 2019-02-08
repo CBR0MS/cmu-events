@@ -1,0 +1,67 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Logout</a></p>
+{% else %}
+  <a href="{% url 'login' %}">Login</a>
+  <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+
+
+<div id="sidebar">
+    
+</div>
+
+<div id="scroll-content">
+    <div id="scroll-wrapper">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="event-block">
+                    <div class="event-block-img">
+                        
+                    </div>
+                    <h2>Event title</h2>
+                    <div class="event-block-details">
+                        <div><i class="far fa-clock"></i>This is by them</div>
+                        <div><i class="fas fa-map-marker"></i>This is over here</div>
+                        <div><i class="fas fa-users"></i>This is in here</div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="event-block">
+                    
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="event-block">
+                    
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="event-block">
+                    
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="event-block">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
