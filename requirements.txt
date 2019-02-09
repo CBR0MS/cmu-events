@@ -21,7 +21,7 @@ numpy==1.16.1
 plac==0.9.6
 preshed==2.0.1
 pyodbc==4.0.25
-pypyodbc==1.3.4
+pypyodbc==1.3.4.3
 python-decouple==3.1
 pytz==2018.9
 regex==2018.1.10
