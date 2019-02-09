@@ -25,6 +25,10 @@
         Filter by Organization:
         <input type="text" id="orgSearch">
         <button class="filter-button" onclick="filterByOrg()">Filter</button>
+        <button class="filter-button" onclick="showAllEvents()">Show All Events</button>
+        {% if user.is_authenticated %}
+        <button class="filter-button" onclick="showOrgs()">Show Events for my Orgs</button>
+        {% endif %}
     </div>
 
 </div>
@@ -56,11 +60,14 @@
     </div>
 </div>
 
-{{ objects|json_script:"jsonObjects" }}
+{{ eventObjects|json_script:"eventObj" }}
+{{ userOrgsObjects|json_script:"userObj" }}
 
 <script>
-    const events = JSON.parse(document.getElementById('jsonObjects').textContent)
+    const events = JSON.parse(document.getElementById('eventObj').textContent)
+    const userOrgs = JSON.parse(document.getElementById('userObj').textContent)
     console.log(events)
+    console.log(userOrgs)
 </script>
 
 

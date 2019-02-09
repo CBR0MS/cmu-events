@@ -92,7 +92,7 @@ input {
 }
 
 .event-block {
-    cursor: pointer;
+   /* cursor: pointer;*/
     transition: all 0.5s;
     margin: 20px 10px;
     height: 300px;
@@ -174,7 +174,7 @@ button {
     background-color: #AC2217;
     height: 40px;
     margin-right: 10px;
-    width: 100px;
+    min-width: 100px;
     border: none;
     border-radius: 5px;
     text-align: center;
@@ -198,6 +198,7 @@ a {
     background-color: #646464;
     height: 40px;
     padding: 5px;
+    font-size: 14px;
 }
 
 

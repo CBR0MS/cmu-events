@@ -1,16 +1,28 @@
+let MOBILE = false
+
 $(document).ready(function(){
+    if ($(window).width() < 900 ) {
+        MOBILE = true
+    } else {
+        MOBILE = false
+    }
     checkWindowSizeAdjustSidebar()
 })
 
 
 $(window).resize(function(){
+    if ($(window).width() < 900 ) {
+        MOBILE = true
+    } else {
+        MOBILE = false
+    }
     checkWindowSizeAdjustSidebar()
 })
 
 
 function checkWindowSizeAdjustSidebar() {
     $('#sidebar-icon').css('display', 'inline-block')
-    if ($(window).width() < 900 ) {
+    if (MOBILE) {
         closeSidebar()
     } else {
         $('#sidebar-icon').css('display', 'none')
@@ -19,9 +31,9 @@ function checkWindowSizeAdjustSidebar() {
 }
 
 function toggleSidebar() {
-    if ($('#sidebar').hasClass('hidden')) {
+    if ($('#sidebar').hasClass('hidden') && MOBILE) {
         openSidebar()
-    } else {
+    } else if (MOBILE) {
         closeSidebar()
     }
 }
@@ -39,7 +51,9 @@ function openSidebar() {
 }
 
 const options = {
-  shouldSort: true,
+shouldSort: true,
+  tokenize: true,
+  includeScore: true,
   threshold: 0.6,
   location: 0,
   distance: 100,
@@ -53,20 +67,7 @@ const options = {
 
 const fuse = new Fuse(events, options)
 
-
-function filterByOrg() {
-    const query = $('#orgSearch').val()
-    
-   
-    const result = fuse.search(query);
-
-    let show = []
-    for (const i in result) {
-           show.push(result[i].slug)
-    }
-
-    console.log(show)
-
+function filterEventBlocks(show) {
     $('.event-block').each(function(){
         skip = false
         for (const i in show ) {
@@ -82,6 +83,49 @@ function filterByOrg() {
        
     })
 }
+
+function filterByOrg() {
+    const query = $('#orgSearch').val()
+    
+    const result = fuse.search(query);
+
+    let show = []
+    for (const i in result) {
+        if (result[i].score < 0.4){
+           show.push(result[i].item.slug)
+        }
+    }
+
+    filterEventBlocks(show)
+    toggleSidebar()
+}
+
+function showAllEvents() {
+    $('.event-block').each(function(){
+        $(this).css('display', 'inline-block')
+       
+    })
+    toggleSidebar()
+}
+
+function showOrgs() {
+    const orgs = userOrgs[0].organizations
+
+    let show = []
+
+    for (const i in orgs) {
+        for (const j in events) {
+            if (events[j].organization == orgs[i]) {
+                show.push(events[j].slug)
+            }
+        }
+    }
+
+    filterEventBlocks(show)
+    toggleSidebar()
+}
+
+
 
 
 
