@@ -121,7 +121,7 @@ USE_TZ = True
 
 
 #celery specification
-CELERY_BROKER_URL = 'redis://localhost:6379'
+"""CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
@@ -132,7 +132,7 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'events.tasks.gather_data',
         'schedule': crontab(minute=59,hour=23),
     }
-}
+}"""
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

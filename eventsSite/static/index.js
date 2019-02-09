@@ -38,7 +38,55 @@ function openSidebar() {
     $('#scroll-content').css('width', 'calc(100vw - 375px)')
 }
 
+const options = {
+  shouldSort: true,
+  threshold: 0.6,
+  location: 0,
+  distance: 100,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: [
+    "organization",
+    "name"
+  ]
+}
+
+const fuse = new Fuse(events, options)
+
+
 function filterByOrg() {
     const query = $('#orgSearch').val()
-    console.log(query)
+    
+   
+    const result = fuse.search(query);
+
+    let show = []
+    for (const i in result) {
+           show.push(result[i].slug)
+    }
+
+    console.log(show)
+
+    $('.event-block').each(function(){
+        skip = false
+        for (const i in show ) {
+             if ($(this).hasClass(show[i])) {
+                skip = true
+             }
+        }
+        if (!skip) {
+            $(this).css('display', 'none')
+        } else {
+            $(this).css('display', 'inline-block')
+        }
+       
+    })
 }
+
+
+
+
+
+
+
+

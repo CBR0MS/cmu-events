@@ -4,6 +4,9 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.0/fuse.min.js"></script>
+
 
 
 <div id="sidebar">
@@ -34,7 +37,7 @@
         <div class="row">
             {% for event in events %}
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="event-block">
+                <div class="event-block {{ event.slug }}">
                     <div class="event-block-img">
                         <img class='image' src="{{ event.img_url }}" alt="">
                     </div>
@@ -56,12 +59,11 @@
 {{ objects|json_script:"jsonObjects" }}
 
 <script>
-    const value = JSON.parse(document.getElementById('jsonObjects').textContent)
-    console.log(value)
+    const events = JSON.parse(document.getElementById('jsonObjects').textContent)
+    console.log(events)
 </script>
 
 
-{% load static %}
 <script src="{% static "index.js" %}"></script>
 
 {% endblock %}
