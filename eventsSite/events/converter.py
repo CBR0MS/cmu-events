@@ -2,7 +2,8 @@ import imaplib
 import email
 import string
 import re
-from parserOne import *
+#from parserOne import *
+from .parserOne import *
 
 def normalizer(line):
     while(re.search("Subject:",line) != None):
@@ -10,8 +11,8 @@ def normalizer(line):
          line = line[index+8:-1]
     x = re.split("To:",line)
     c = x[1]
-    c = c.replace("\r\n"," ")
-    c = c.replace(r"\r\n"," ")
+    c = c.replace('\r\n',' ')
+    c = c.replace(r'\r\n',' ')
     return c
 
 def extractor(line):
@@ -56,7 +57,7 @@ def retrieve():
                     try:
                         obj = driver(normalizer(line),obj)
                         if obj != None:
-                            objects.append([obj])
+                            objects.append(obj)
                     except IndexError as e:
                         break
             else:
