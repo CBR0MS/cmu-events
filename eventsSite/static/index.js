@@ -37,3 +37,8 @@ function openSidebar() {
     $('#scroll-content').css('padding-left', '375px')
     $('#scroll-content').css('width', 'calc(100vw - 375px)')
 }
+
+function filterByOrg() {
+    const query = $('#orgSearch').val()
+    console.log(query)
+}
