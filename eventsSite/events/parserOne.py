@@ -9,6 +9,8 @@ class Email:
         self.activity = []
         self.urlimage = []
         self.topic = []
+        self.loc = []
+
 
 def abs(x):
     if x > 0:
@@ -34,6 +36,8 @@ def pair(email):
     email.date = [email.date[minPair[0]][0]]
 
 def clean(email):
+    if(len(email.loc) < 1):
+        email.loc.append(["CMU"])
     return email
 
 def driver(input,temp):
@@ -48,6 +52,7 @@ def driver(input,temp):
         words = ent.text
         type = ent.label_
         start = ent.start_char
+        print([ent.text,ent.label_])
         #print(ent.text, ent.label_)
         if(ent.label_ == "DATE"):
             temp.date.append((ent.text,ent.start_char))
@@ -55,6 +60,8 @@ def driver(input,temp):
             temp.time.append((ent.text,ent.start_char))
         elif(ent.label_ == "ORG"):
             temp.clubname.append(ent.text)
+        elif(ent.label_ == "LOC"):
+            temp.loc.append(ent.text)
 
 
     #If multiple dates, discard email
@@ -64,14 +71,14 @@ def driver(input,temp):
     #if(len(temp.date) == 1):
     pair(temp)
     clean(temp)
-    try:
+    """try:
         if(len(temp.clubname) > 0):
             print(temp.clubname)
             print(temp.activity)
             print(temp.date)
             print(temp.time)
     except UnicodeEncodeError as e:
-        return
+        return"""
     print('\n')
 
 """for token in doc:
