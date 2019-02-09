@@ -18,10 +18,12 @@ class Organization(models.Model):
 
 
 class Event(models.Model):
+    slug = models.SlugField(unique=True, null=True)
     name = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     date = models.DateField(auto_now=False)
-    organization = models.ManyToManyField(Organization)
+    time = models.TimeField(auto_now=False, null=True)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
     img_url = models.URLField()
 
     def __str__(self):

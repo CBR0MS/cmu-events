@@ -185,6 +185,14 @@ a {
     color: #AC2217;
 }
 
+.image {
+    height: 80px;
+    width: 350px;
+    border-radius: 5px 5px 0 0;
+    object-fit: cover;
+
+}
+
 .filter-button {
     margin: 10px 0;
     background-color: #646464;
