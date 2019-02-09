@@ -22,39 +22,38 @@ def extractor(line):
     length = len(xp)-3
     return (xp[8:length])
 
-mail = imaplib.IMAP4_SSL('imap.gmail.com')
-mail.login('cmuactivitieslist','cmualca2019')
-mail.list()
-mail.select('inbox')
+def retrieve():
+    mail = imaplib.IMAP4_SSL('imap.gmail.com')
+    mail.login('cmuactivitieslist','cmualca2019')
+    mail.list()
+    mail.select('inbox')
 
-result, data = mail.uid('search',None,"ALL")
+    result, data = mail.uid('search',None,"ALL")
 
-i = len(data[0].split())
-for x in range(i):
-    latest_email_uid = data[0].split()[x]
-    result, email_data = mail.uid('fetch',latest_email_uid,'(RFC822)')
-    raw_email = email_data[0][1]
-    raw_email_string = raw_email.decode('utf-8')
-    email_message = email.message_from_string(raw_email_string)
-    obj = Email()
-    for part in email_message.walk():
-        if part.get_content_type() == "text/plain":
-            body = part.get_payload(decode=True)
-            save_string = str("Dumpgmailemail_" + str(x) + ".eml")
-            #myfile = open(save_string, 'w+')
-            try:
-                line = body.decode('utf-8')
-            except UnicodeEncodeError as e:
-                break
-            subject = extractor(line)
-            if subject != None:
-                obj.activity = [subject]
-                #myfile.write(normalizer(line))
-                #myfile.close()
-                print(save_string)
+    i = len(data[0].split())
+    for x in range(i):
+        latest_email_uid = data[0].split()[x]
+        result, email_data = mail.uid('fetch',latest_email_uid,'(RFC822)')
+        raw_email = email_data[0][1]
+        raw_email_string = raw_email.decode('utf-8')
+        email_message = email.message_from_string(raw_email_string)
+        obj = Email()
+        for part in email_message.walk():
+            if part.get_content_type() == "text/plain":
+                body = part.get_payload(decode=True)
+                save_string = str("Dumpgmailemail_" + str(x) + ".eml")
+                #myfile = open(save_string, 'w+')
                 try:
-                    driver(normalizer(line),obj)
-                except IndexError as e:
+                    line = body.decode('utf-8')
+                except UnicodeEncodeError as e:
                     break
-        else:
-            continue
+                subject = extractor(line)
+                if subject != None:
+                    obj.activity = [subject]
+                    print(save_string)
+                    try:
+                        driver(normalizer(line),obj)
+                    except IndexError as e:
+                        break
+            else:
+                continue
