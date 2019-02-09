@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.core.serializers import serialize
 from .models import Event, Organization
 from accounts.models import User
-from .tasks import *
+# from .tasks import *
 
 from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
