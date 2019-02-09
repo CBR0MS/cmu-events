@@ -34,10 +34,25 @@ def pair(email):
                 minPair[0] = j
     email.time = [email.time[minPair[1]][0]]
     email.date = [email.date[minPair[0]][0]]
-
-def clean(email):
     if(len(email.loc) < 1):
         email.loc.append(["CMU"])
+    else:
+        minIndex = 0
+        minDif = 99999999999
+        for i in range(len(email.loc)):
+            loc = email.loc[i][1]
+            if(abs(loc-dateloc) < minDif):
+                minIndex = i
+                minDif = abs(loc-dateloc)
+        email.loc = [email.loc[minIndex]]
+    return email
+
+
+def clean(email):
+    email.time = [email.time[0].replace('\r\n','')]
+    email.date = [email.date[0].replace('\r\n','')]
+    email.clubname = [email.clubname[0].replace('\r\n','')]
+    email.activity =
     return email
 
 def driver(input,temp):
@@ -59,9 +74,9 @@ def driver(input,temp):
         elif(ent.label_ == "TIME"):
             temp.time.append((ent.text,ent.start_char))
         elif(ent.label_ == "ORG"):
-            temp.clubname.append(ent.text)
+            temp.clubname.append((ent.text,ent.start_char))
         elif(ent.label_ == "LOC"):
-            temp.loc.append(ent.text)
+            temp.loc.append((ent.text,ent.start_char))
 
 
     #If multiple dates, discard email
@@ -69,16 +84,13 @@ def driver(input,temp):
     #Might be useful to include context of email for "this" localizations
     #Add ability to parse multiple events later
     #if(len(temp.date) == 1):
-    pair(temp)
-    clean(temp)
-    """try:
+    temp = pair(temp)
+    temp = clean(temp)
+    try:
         if(len(temp.clubname) > 0):
-            print(temp.clubname)
-            print(temp.activity)
-            print(temp.date)
-            print(temp.time)
+            return temp
     except UnicodeEncodeError as e:
-        return"""
+        return
     print('\n')
 
 """for token in doc:
