@@ -48,7 +48,7 @@ def index(request):
     serializer_event = EventSerializer(Event.objects.all(), many=True)
     serializer_user = UserSerializer(User.objects.filter(pk=request.user.id), many=True)
     #json_objects = serialize('json', Event.objects.all(), cls=LazyEncoder)
-    gather_data()
+    #gather_data()
     return render(request, 'home.html', {'eventObjects': serializer_event.data,
                                          'events': Event.objects.all().order_by('date'),
                                          'userOrgsObjects': serializer_user.data
