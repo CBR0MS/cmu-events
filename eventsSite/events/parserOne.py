@@ -51,8 +51,9 @@ def pair(email):
 def clean(email):
     email.time = [email.time[0].replace('\r\n','')]
     email.date = [email.date[0].replace('\r\n','')]
-    email.clubname = [email.clubname[0].replace('\r\n','')]
-    email.activity =
+    email.clubname = [email.clubname[0][0].replace('\r\n','')]
+    email.activity = [email.activity[0].replace('\r\n','')]
+    email.loc = [email.loc[0][0].replace('\r\n','')]
     return email
 
 def driver(input,temp):
@@ -67,7 +68,6 @@ def driver(input,temp):
         words = ent.text
         type = ent.label_
         start = ent.start_char
-        print([ent.text,ent.label_])
         #print(ent.text, ent.label_)
         if(ent.label_ == "DATE"):
             temp.date.append((ent.text,ent.start_char))
@@ -90,8 +90,7 @@ def driver(input,temp):
         if(len(temp.clubname) > 0):
             return temp
     except UnicodeEncodeError as e:
-        return
-    print('\n')
+        return None
 
 """for token in doc:
     print(token.text)"""

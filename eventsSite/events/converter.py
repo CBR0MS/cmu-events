@@ -30,6 +30,8 @@ def retrieve():
 
     result, data = mail.uid('search',None,"ALL")
 
+    objects = []
+
     i = len(data[0].split())
     for x in range(i):
         latest_email_uid = data[0].split()[x]
@@ -50,10 +52,13 @@ def retrieve():
                 subject = extractor(line)
                 if subject != None:
                     obj.activity = [subject]
-                    print(save_string)
+                    #print(save_string)
                     try:
-                        driver(normalizer(line),obj)
+                        obj = driver(normalizer(line),obj)
+                        if obj != None:
+                            objects.append([obj])
                     except IndexError as e:
                         break
             else:
                 continue
+    return objects
