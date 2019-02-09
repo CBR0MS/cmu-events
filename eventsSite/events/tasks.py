@@ -56,6 +56,7 @@ def gather_data():
         except Organization.DoesNotExist as e:
             orgPrime = Organization()
             orgPrime.name = org
+            orgPrime.save()
 
         m = Event()
         m.name = name
@@ -63,8 +64,8 @@ def gather_data():
         print(location)
         m.date = date
         m.time = time
-        #m.dateE = dateE
-        #m.timeE = timeE
-        #m.organization = orgPrime
+        m.dateE = dateE
+        m.timeE = timeE
+        m.organization = orgPrime
         #m.img_url = url
         m.save()

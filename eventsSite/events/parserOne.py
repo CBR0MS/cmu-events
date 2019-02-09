@@ -34,6 +34,7 @@ def pair(email):
                 minPair[0] = j
     email.time = [email.time[minPair[1]][0]]
     email.date = [email.date[minPair[0]][0]]
+    email.urlimage = ['']
     if(len(email.loc) < 1):
         email.loc.append(["CMU"])
     else:
@@ -49,11 +50,11 @@ def pair(email):
 
 
 def clean(email):
-    email.time = [email.time[0].replace('\r\n','')]
-    email.date = [email.date[0].replace('\r\n','')]
-    email.clubname = [email.clubname[0][0].replace('\r\n','')]
-    email.activity = [email.activity[0].replace('\r\n','')]
-    email.loc = [email.loc[0][0].replace('\r\n','')]
+    email.time = [email.time[0].replace(r'\r\n','')]
+    email.date = [email.date[0].replace(r'\r\n','')]
+    email.clubname = [email.clubname[0][0].replace(r'\r\n','')]
+    email.activity = [email.activity[0].replace(r'\r\n','')]
+    email.loc = [email.loc[0][0].replace(r'\r\n','')]
     return email
 
 def driver(input,temp):
@@ -87,8 +88,10 @@ def driver(input,temp):
     temp = pair(temp)
     temp = clean(temp)
     try:
-        if(len(temp.clubname) > 0):
+        if(len(temp.clubname) > 0 and len(temp.date)>0 and len(temp.time)>0 and len(temp.loc)>0):
             return temp
+        else:
+            return None
     except UnicodeEncodeError as e:
         return None
 

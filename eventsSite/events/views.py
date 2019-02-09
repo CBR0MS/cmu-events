@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.core.serializers import serialize
 from .models import Event, Organization
 from accounts.models import User
+from .tasks import *
 
 from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
@@ -17,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        
+
 
 class EventSerializer(serializers.ModelSerializer):
     #organizations = OrganizationSerializer( read_only=True, many=True)
@@ -31,7 +32,7 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
         ordering = ['-date', '-time']
-        
+
 
 
 # class LazyEncoder(DjangoJSONEncoder):
@@ -47,8 +48,8 @@ def index(request):
     serializer_event = EventSerializer(Event.objects.all(), many=True)
     serializer_user = UserSerializer(User.objects.filter(pk=request.user.id), many=True)
     #json_objects = serialize('json', Event.objects.all(), cls=LazyEncoder)
+    gather_data()
     return render(request, 'home.html', {'eventObjects': serializer_event.data,
                                          'events': Event.objects.all().order_by('date'),
                                          'userOrgsObjects': serializer_user.data
                                          })
-
