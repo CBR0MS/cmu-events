@@ -5,7 +5,6 @@ certifi==2018.11.29
 chardet==3.0.4
 crontab==0.22.5
 cymem==2.0.2
-cytoolz==0.9.0.1
 dill==0.2.9
 dj-database-url==0.5.0
 Django==2.1.5
@@ -20,8 +19,6 @@ murmurhash==1.0.1
 numpy==1.16.1
 plac==0.9.6
 preshed==2.0.1
-pyodbc==4.0.25
-pypyodbc==1.3.4.3
 python-decouple==3.1
 pytz==2018.9
 regex==2018.1.10
