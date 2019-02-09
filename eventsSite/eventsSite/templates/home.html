@@ -22,13 +22,27 @@
 
     </div>
     <div id="filters">
-        Filter by Organization:
-        <input type="text" id="orgSearch">
-        <button class="filter-button" onclick="filterByOrg()">Filter</button>
-        <button class="filter-button" onclick="showAllEvents()">Show All Events</button>
-        {% if user.is_authenticated %}
-        <button class="filter-button" onclick="showOrgs()">Show Events for my Orgs</button>
-        {% endif %}
+        <div class="input-wrapper">
+            Filter by Organization:
+            <input type="text" id="orgSearch">
+            <button class="filter-button" onclick="filterByOrg()">Filter</button>
+        </div>
+        <div class="input-wrapper">
+            Filter by Topic: <br>
+            <input type="text" id="topicSearch">
+            <button class="filter-button" onclick="filterByTopic()">Filter</button>
+        </div>
+        <div class="input-wrapper">
+            Filter by Location:
+            <input type="text" id="placeSearch">
+            <button class="filter-button" onclick="filterByPlace()">Filter</button>
+        </div>
+        <div class="input-wrapper">
+            <button class="filter-button" onclick="showAllEvents()">Show All Events</button>
+            {% if user.is_authenticated %}
+            <button class="filter-button" onclick="showOrgs()">Show Events for my Orgs</button>
+            {% endif %}
+        </div>
     </div>
 
 </div>
@@ -40,8 +54,8 @@
     <div id="scroll-wrapper">
         <div class="row">
             {% for event in events %}
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="event-block {{ event.slug }}">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 {{ event.slug }} col-hlder">
+                <div class="event-block">
                     <div class="event-block-img">
                         <img class='image' src="{{ event.img_url }}" alt="">
                     </div>

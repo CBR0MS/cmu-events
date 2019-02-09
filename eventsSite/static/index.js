@@ -50,25 +50,51 @@ function openSidebar() {
     $('#scroll-content').css('width', 'calc(100vw - 375px)')
 }
 
-const options = {
-shouldSort: true,
-  tokenize: true,
-  includeScore: true,
-  threshold: 0.6,
-  location: 0,
-  distance: 100,
-  maxPatternLength: 32,
-  minMatchCharLength: 1,
-  keys: [
-    "organization",
-    "name"
-  ]
+const placeSearchOptions = {
+    shouldSort: true,
+    tokenize: true,
+    includeScore: true,
+    threshold: 0.6,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+    "location"
+    ]
 }
 
-const fuse = new Fuse(events, options)
+const topicSearchOptions = {
+    shouldSort: true,
+    tokenize: true,
+    includeScore: true,
+    threshold: 0.6,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+    "name"
+    ]
+}
+
+const orgSearchOptions = {
+    shouldSort: true,
+    tokenize: true,
+    includeScore: true,
+    threshold: 0.6,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+    "organization"
+    ]
+}
 
 function filterEventBlocks(show) {
-    $('.event-block').each(function(){
+
+    $('.col-hlder').each(function(){
         skip = false
         for (const i in show ) {
              if ($(this).hasClass(show[i])) {
@@ -86,7 +112,7 @@ function filterEventBlocks(show) {
 
 function filterByOrg() {
     const query = $('#orgSearch').val()
-    
+    const fuse = new Fuse(events, orgSearchOptions)
     const result = fuse.search(query);
 
     let show = []
@@ -101,10 +127,13 @@ function filterByOrg() {
 }
 
 function showAllEvents() {
-    $('.event-block').each(function(){
+    $('.col-hlder').each(function(){
         $(this).css('display', 'inline-block')
        
     })
+    $('#orgSearch').val("")
+    $('#placeSearch').val("")
+    $('#topicSearch').val("")
     toggleSidebar()
 }
 
@@ -124,6 +153,42 @@ function showOrgs() {
     filterEventBlocks(show)
     toggleSidebar()
 }
+
+function filterByPlace() {
+    const query = $('#placeSearch').val()
+    const fuse = new Fuse(events, placeSearchOptions)
+    const result = fuse.search(query);
+
+    let show = []
+    for (const i in result) {
+        if (result[i].score < 0.4){
+           show.push(result[i].item.slug)
+        }
+    }
+
+    filterEventBlocks(show)
+    toggleSidebar()
+
+}
+
+
+function filterByTopic() {
+    const query = $('#topicSearch').val()
+    const fuse = new Fuse(events, topicSearchOptions)
+    const result = fuse.search(query);
+
+    let show = []
+    for (const i in result) {
+        if (result[i].score < 0.4){
+           show.push(result[i].item.slug)
+        }
+    }
+
+    filterEventBlocks(show)
+    toggleSidebar()
+
+}
+
 
 
 

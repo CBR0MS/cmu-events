@@ -197,8 +197,12 @@ a {
     margin: 10px 0;
     background-color: #646464;
     height: 40px;
-    padding: 5px;
+    padding: 5px 11px;
     font-size: 14px;
+}
+
+.input-wrapper {
+    padding-top: 10px;
 }
 
 

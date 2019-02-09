@@ -30,6 +30,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+        ordering = ['-date', '-time']
         
 
 
@@ -47,7 +48,7 @@ def index(request):
     serializer_user = UserSerializer(User.objects.filter(pk=request.user.id), many=True)
     #json_objects = serialize('json', Event.objects.all(), cls=LazyEncoder)
     return render(request, 'home.html', {'eventObjects': serializer_event.data,
-                                         'events': Event.objects.all(),
+                                         'events': Event.objects.all().order_by('date'),
                                          'userOrgsObjects': serializer_user.data
                                          })
 
